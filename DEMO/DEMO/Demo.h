@@ -1,4 +1,4 @@
- // Demo.h
+ // Demo.h: representaciòn general del demo, con funcionalidades de control.
 
 #ifndef DEMO_H
 #define DEMO_H
@@ -10,9 +10,9 @@
 class Demo
 {
 public:
-	Demo();
-	Demo(Demo& rhs);
-	Demo(/*con todos los argumentos*/);
+	Demo(); // Constructor default: se utiliza cuando se crea una nueva pista.
+	Demo(Demo& rhs); // Constructor de copia
+	Demo(std::string iD, std::vector<std::string> pistas, int activas); // Constructor completo 
 	~Demo();
 
 	Demo& operator=(Demo& rhs);
@@ -24,11 +24,12 @@ public:
 
 
 private:
-	std::string demoID;
-	std::vector<std::string> Pistas;
-	int numPistasActivas;
-	float tiempoReproduccionTotal;
-	Clock relojDemo;
+	std::string demoID; // identificador del demo
+	std::vector<std::string> pistas; // el vector almacena los IDs de todas las pistas incluidas en el demo
+	int numPistasActivas; // indica la cantidad de pistas activas que el demo tiene en un momento dado
+	std::vector<std::string> pistasActivas; // almacena las pistas activas que hay en el demo al momento de iniciar la reproducciòn
+	float tiempoReproduccionTotal; // indica la suma total de tiempo que abarca la reproducciòn total del demo en un momento dado.
+	Clock relojDemo; // reloj interno de referencia para reproducciòn y grabaciòn.
 };
 
 
