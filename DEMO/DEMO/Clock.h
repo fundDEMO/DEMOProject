@@ -9,9 +9,8 @@ class Clock
 {
 public:
 	Clock();
-	~Clock();
 
-	float minuto(float minuto); // avanzar o retrasar reloj hasta un tiempo 'minuto' deseado.
+	void minuto(float min); // avanzar o retrasar reloj hasta un tiempo 'minuto' deseado.
 	void pauseClock(); // detiene el reloj instantáneamente.
 	void stopClock(); // detiene el reloj y lo vuelve a 0.
 	void startClock(); // inicia el conteo del tiempo desde el punto actual del reloj
