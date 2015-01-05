@@ -24,6 +24,12 @@
     <ClInclude Include="Pista.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ClockTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EventListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Clock.cpp">

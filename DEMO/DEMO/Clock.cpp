@@ -2,6 +2,7 @@
 
 #include <time.h>
 #include "Clock.h"
+#include "ClockTime.h"
 
 Clock::Clock()
 {
@@ -12,7 +13,7 @@ Clock::Clock()
 }
 
 
-void Clock::minuto(float min) // traslada el conteo del tiempo al tiempo que se indique en el argumento 'min' (centésimas de segundo).
+void Clock::minuto(int min) // traslada el conteo del tiempo al tiempo que se indique en el argumento 'min' (centésimas de segundo).
 {
 	tiempoRep = min * (CLOCKS_PER_SEC / 100);
 	startClock();
@@ -21,9 +22,17 @@ void Clock::minuto(float min) // traslada el conteo del tiempo al tiempo que se 
 
 void Clock::pauseClock() // detiene el conteo de tiempo pero mantiene el último valor de tiempoRep.
 {
-	pausa = true;
-	contando = clock() - clockEn0;
-	tiempoRep = contando;
+	if (!pausa)
+	{
+		pausa = true;
+		contando = clock() - clockEn0;
+		tiempoRep += contando;
+	}
+	else
+	{
+		tiempoRep = tiempoRep; // revisar esto con el reloj andando
+	}
+	
 }
 
 
@@ -42,10 +51,38 @@ void Clock::startClock() // pone en marcha el reloj contando el tiempo en c_tick
 }
 
 
-float Clock::getTiempoRep() // devuelve el tiempo de reproducción transcurrido, expresado en centésimas de segundo.
+int Clock::getTiempoRep() // devuelve el tiempo de reproducción transcurrido, expresado en centésimas de segundo.
 {
 	if (!pausa)
 		return ((clock() - clockEn0) + tiempoRep) / (CLOCKS_PER_SEC / 100);
 	else
 		return tiempoRep / (CLOCKS_PER_SEC / 100);
+}
+
+ClockTime Clock::getClockTimeTiempoRep()
+{
+	int temporalTiempoRep, hora, minuto, segundo, centesima;
+
+	if (!pausa)
+		temporalTiempoRep = ((clock() - clockEn0) + tiempoRep) / (CLOCKS_PER_SEC / 100);
+	else
+		temporalTiempoRep = tiempoRep / (CLOCKS_PER_SEC / 100);
+
+	centesima = temporalTiempoRep;
+	segundo = centesima / 100;
+	centesima -= (segundo * 100);
+	minuto = segundo / 60;
+	segundo -= (minuto * 60);
+	hora = minuto / 60;
+	minuto -= (hora * 60);
+
+	ClockTime returnClockTimeTiempoRep;
+
+	returnClockTimeTiempoRep.hora = hora;
+	returnClockTimeTiempoRep.minuto = minuto;
+	returnClockTimeTiempoRep.segundo = segundo;
+	returnClockTimeTiempoRep.centesima = centesima;
+
+	return returnClockTimeTiempoRep;
+	
 }

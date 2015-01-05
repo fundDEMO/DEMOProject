@@ -5,18 +5,21 @@
 #define CLOCK_H
 
 #include<time.h>
+#include "ClockTime.h"
 
 class Clock
 {
 public:
 	Clock();
 
-	void minuto(float min); // avanzar o retrasar reloj hasta un tiempo 'minuto' deseado, expresado en centésimas de segundo.
+	void minuto(int min); // avanzar o retrasar reloj hasta un tiempo 'minuto' deseado, expresado en centésimas de segundo.
 	void pauseClock(); // detiene el reloj instantáneamente.
 	void stopClock(); // detiene el reloj y lo vuelve a 0.
 	void startClock(); // inicia el conteo del tiempo desde el punto actual del reloj
+	 
 	
-	float getTiempoRep(); // devuelve el tiempo de reproducción válida en un momento dado, expresado en centésimas de segundo.
+	int getTiempoRep(); // devuelve el tiempo de reproducción válida en un momento dado, expresado en centésimas de segundo.
+	ClockTime getClockTimeTiempoRep(); // devuelve el tiempo de reproducción válida en un momento dado, expresado en ClockTime struct.
 
 private:
 	clock_t clockEn0; // Determina el momento 0 de referencia de cada conteo del reloj.
