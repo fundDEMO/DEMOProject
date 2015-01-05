@@ -5,48 +5,47 @@
 
 Clock::Clock()
 {
-	clockEn0 = clock() / CLOCKS_PER_SEC;
+	clockEn0 = 0;
 	tiempoRep = 0;
-	pausado = false;
-	reseteado = false;
+	pausa = false;
+	contando = 0;
 }
 
 
-void Clock::minuto(float min)
+void Clock::minuto(float min) // traslada el conteo del tiempo al tiempo que se indique en el argumento 'min' (centésimas de segundo).
 {
-	tiempoRep = min;
+	tiempoRep = min * (CLOCKS_PER_SEC / 100);
+	startClock();
 }
 
 
-void Clock::pauseClock()
+void Clock::pauseClock() // detiene el conteo de tiempo pero mantiene el último valor de tiempoRep.
 {
-	pausado = true;
+	pausa = true;
+	contando = clock() - clockEn0;
+	tiempoRep = contando;
 }
 
 
-void Clock::stopClock()
+void Clock::stopClock() // detiene el conteo de tiempo y reseteta la variable tiempoRep para reinciciar el conteo desde 0 la próxima vez.
 {
-	reseteado = true;
+	pausa = true;
+	tiempoRep = 0;
 }
 
 
-void Clock::startClock()
+void Clock::startClock() // pone en marcha el reloj contando el tiempo en c_ticks
 {
-
-	clockEn0 = clock() / CLOCKS_PER_SEC;
-
-	if (reseteado)
-	{
-		tiempoRep = 0;
-		reseteado = false;
-	}
-	else if (pausado)
-		pausado = false;
+	clockEn0 = clock();
+	if (pausa)
+		pausa = false;
 }
 
 
-float Clock::getTiempoRep()
+float Clock::getTiempoRep() // devuelve el tiempo de reproducción transcurrido, expresado en centésimas de segundo.
 {
-	tiempoRep = (clock() / (CLOCKS_PER_SEC)) - clockEn0;
-	return tiempoRep;
+	if (!pausa)
+		return ((clock() - clockEn0) + tiempoRep) / (CLOCKS_PER_SEC / 100);
+	else
+		return tiempoRep / (CLOCKS_PER_SEC / 100);
 }

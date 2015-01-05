@@ -1,4 +1,5 @@
-// Clock.h: la clase representa un reloj que gobierna las funcionalidades de reproducción y de grabación de un demo.
+// Clock.h: la clase representa un reloj que gobierna las funcionalidades de reproducción y de grabación de un demo. Está construído sobre la 
+// librería time.h que forma parte de la biblioteca standar de c++, por lo que  liplementación es portable.
 
 #ifndef CLOCK_H
 #define CLOCK_H
@@ -10,18 +11,18 @@ class Clock
 public:
 	Clock();
 
-	void minuto(float min); // avanzar o retrasar reloj hasta un tiempo 'minuto' deseado.
+	void minuto(float min); // avanzar o retrasar reloj hasta un tiempo 'minuto' deseado, expresado en centésimas de segundo.
 	void pauseClock(); // detiene el reloj instantáneamente.
 	void stopClock(); // detiene el reloj y lo vuelve a 0.
 	void startClock(); // inicia el conteo del tiempo desde el punto actual del reloj
 	
-	float getTiempoRep(); // devuelve el tiempo de reproducción válida en un momento dado.
+	float getTiempoRep(); // devuelve el tiempo de reproducción válida en un momento dado, expresado en centésimas de segundo.
 
 private:
-	float clockEn0; // indica el momento 0 de la reproducción. A partir de ahí se inicia el conteo.
-	float tiempoRep; // almacena el tiempo de reproducción válida.
-	bool pausado; // indica que el reloj está en pausa.
-	bool reseteado; // indica que el reloj se ha vuelto a 0 después de un stop.
+	clock_t clockEn0; // Determina el momento 0 de referencia de cada conteo del reloj.
+	clock_t tiempoRep; // almacena el tiempo de reproducción válida.
+	bool pausa; // indica que el reloj ha sido detenido.
+	clock_t contando;
 };
 
 #endif //!CLOCK_H
