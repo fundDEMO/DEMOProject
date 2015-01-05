@@ -8,7 +8,7 @@ Clock::Clock()
 {
 	clockEn0 = 0;
 	tiempoRep = 0;
-	pausa = false;
+	pausa = true;
 	contando = 0;
 }
 
@@ -16,7 +16,12 @@ Clock::Clock()
 void Clock::minuto(int min) // traslada el conteo del tiempo al tiempo que se indique en el argumento 'min' (centésimas de segundo).
 {
 	tiempoRep = min * (CLOCKS_PER_SEC / 100);
-	startClock();
+	
+	if (!pausa)
+	{
+		startClock();
+	}
+		
 }
 
 
