@@ -5,43 +5,66 @@
 #include <Windows.h>
 #include "ClockTime.h"
 #include "EventListener.h"
+#include <thread>
+
+
+void imprimeReloj(Clock& reloj)
+{
+
+	while (true)
+	{
+
+		ClockTime time = reloj.getClockTimeTiempoRep();
+
+		if (time.hora < 10)
+			std::cout << "0" << time.hora;
+		else
+			std::cout << time.hora;
+
+		std::cout << ":";
+
+		if (time.minuto < 10)
+			std::cout << "0" << time.minuto;
+
+		std::cout << ":";
+
+		if (time.segundo < 10)
+			std::cout << "0" << time.segundo;
+		else
+			std::cout << time.segundo;
+
+		std::cout << ".";
+
+		if (time.centesima < 10)
+			std::cout << "0" << time.centesima;
+		else
+			std::cout << time.centesima;
+
+		std::cout << std::endl;
+
+
+		system("CLS");
+
+	}
+}
 
 
 int main()
 {
-	//int hora = 0, minuto = 0, segundo = 0, centesima = 0;
 
 	char event = 0;
 	int tiempo = 0;
 
 	Clock myClock;
 
-	while (true)
-	{
+	ClockTime myTime;
 
-		std::cout << "Opciones: p.pausa s.stop. a.start g.goto t.tiempo." << std::endl;
-		std::cin >> event;
+	EventListener myEvents(myClock);
 
-		switch (event)
-		{
-		case 'p':
-			myClock.pauseClock();
-			break;
-		case 's':
-			myClock.stopClock();
-			break;
-		case 'a':
-			myClock.startClock();
-			break;
-		case 'g':
-			std::cout << "tiempo." << std::endl;
-			std::cin >> tiempo;
-			myClock.minuto(tiempo);
-			break;
-		case 't':
-			std::cout << myClock.getTiempoRep() << std::endl;
-		}
+	std::thread controlThread(&EventListener::eventReceiver, std::ref(myEvents));
+	std::thread relojThread(&imprimeReloj, myClock);
 
-	}
+	controlThread.join();
+
 
 }

@@ -6,6 +6,7 @@
 
 #include "Clock.h"
 #include <iostream>
+#include <thread>
 
 class EventListener
 {
@@ -32,23 +33,28 @@ EventListener::EventListener(Clock& myClock)
 
 void EventListener::eventReceiver()
 {
-	std::cout << "Opciones: a:start s:stop p:pausa g:goToMinute." << std::endl;
-	std::cin >> eventChooser;
-
-	switch (eventChooser)
+	while (true)
 	{
-	case 'a':
-		start();
-		break;
-	case 's':
-		stop();
-		break;
-	case 'p':
-		pausa();
-		break;
-	case 'g':
-		goToMinute();
-		break;
+		std::cout << "Opciones: a:start s:stop p:pausa g:goToMinute." << std::endl;
+		std::cin >> eventChooser;
+
+		switch (eventChooser)
+		{
+		case 'a':
+			start();
+			break;
+		case 's':
+			stop();
+			break;
+		case 'p':
+			pausa();
+			break;
+		case 'g':
+			goToMinute();
+			break;
+		}
+
+		system("CLS");
 	}
 }
 
