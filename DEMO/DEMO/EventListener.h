@@ -6,7 +6,6 @@
 
 #include "Clock.h"
 #include <iostream>
-#include <thread>
 
 class EventListener
 {

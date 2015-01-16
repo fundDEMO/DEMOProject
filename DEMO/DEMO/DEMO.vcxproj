@@ -83,10 +83,12 @@
     <ClInclude Include="Clock.h" />
     <ClInclude Include="EventListener.h" />
     <ClInclude Include="Pista.h" />
+    <ClInclude Include="Segmento.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Clock.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pista.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,7 +9,6 @@ Clock::Clock()
 	clockEn0 = 0;
 	tiempoRep = 0;
 	pausa = true;
-	contando = 0;
 }
 
 
@@ -21,7 +20,12 @@ void Clock::minuto(int min) // traslada el conteo del tiempo al tiempo que se in
 	{
 		startClock();
 	}
-		
+}
+
+
+void Clock::minuto(ClockTime* time) // traslada el conteo del tiempo al tiempo que se indique en el argumento 'time' (ClockTime).
+{
+	minuto(time->ClockTimeToSs());
 }
 
 
@@ -30,8 +34,7 @@ void Clock::pauseClock() // detiene el conteo de tiempo pero mantiene el último 
 	if (!pausa)
 	{
 		pausa = true;
-		contando = clock() - clockEn0;
-		tiempoRep += contando;
+		tiempoRep += (clock() - clockEn0);
 	}
 	else
 	{
@@ -81,12 +84,7 @@ ClockTime Clock::getClockTimeTiempoRep()
 	hora = minuto / 60;
 	minuto -= (hora * 60);
 
-	ClockTime returnClockTimeTiempoRep;
-
-	returnClockTimeTiempoRep.hora = hora;
-	returnClockTimeTiempoRep.minuto = minuto;
-	returnClockTimeTiempoRep.segundo = segundo;
-	returnClockTimeTiempoRep.centesima = centesima;
+	ClockTime returnClockTimeTiempoRep(hora, minuto, segundo, centesima);
 
 	return returnClockTimeTiempoRep;
 	
